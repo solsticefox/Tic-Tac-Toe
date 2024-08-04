@@ -94,12 +94,13 @@ int main(int argc, char* argv[])
 		if (boardFiller(currentMove, boardArr, player))
 			player *= -1;
 
-		//Draws X and O
-
 		//Resets important variables
 		Mousex = NULL;
 		Mousey = NULL;
 		currentMove = -1;
+
+		if (winCheck(boardArr) != 0)
+			std::cout << winCheck(boardArr) << " wins!!\n";
 
 		//Display stuff
 
@@ -110,7 +111,6 @@ int main(int argc, char* argv[])
 		drawBoard(renderer, &RECTANGLE, BOARDSIZE, BOARDSPACE, BOARDX, BOARDY);
 
 		drawTiles(renderer, &spotRect, otexture, xtexture, boardArr, BOARDX, BOARDY, BOARDSIZE, BOARDSPACE);
-
 
 		SDL_RenderPresent(renderer);
 

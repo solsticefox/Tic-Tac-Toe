@@ -96,3 +96,39 @@ bool boardFiller(int cPosition, int board[], int player)
 
 	return successfulFill;
 }
+
+int winCheck(int board[])
+{
+	int winPlayer = 0;
+	
+	for (int i = 0; i < 9; i++)
+	{
+		if (board[i] == board[i + 1] && board[i + 1] == board[i + 2])
+			winPlayer = board[i];
+		if (winPlayer != 0)
+		{
+			break;
+		}
+	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		if (board[i] == board[i + 3] && board[i] == board[i + 6])
+			winPlayer = board[i];
+		if (winPlayer != 0)
+		{
+			break;
+		}
+	}
+
+	if (board[0] == board[4] && board[0] == board[8])
+	{
+		winPlayer = board[0];
+	}
+	else if (board[2] == board[4] && board[2] == board[6])
+	{
+		winPlayer = board[2];
+	}
+
+	return winPlayer;
+}
