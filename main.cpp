@@ -23,19 +23,18 @@ int main(int argc, char* argv[])
 
 	SDL_Rect RECTANGLE;
 
-	SDL_Rect xRect;
-	SDL_Rect oRect;
+	SDL_Rect winRect;
 
 	SDL_Rect spotRect;
 
-	setRect(&xRect, 0, 0, 200, 200);
-	setRect(&oRect, 200, 200, 200, 200);
-
 	setRect(&spotRect, NULL, NULL, 200, 200);
+	setRect(&winRect, 50, 400, 300, 200);
 
 	//Load assets
 	SDL_Surface* xsurface = IMG_Load("images/xtic.png");
 	SDL_Surface* osurface = IMG_Load("images/otoe.png");
+	SDL_Surface* xwins = IMG_Load("images/xwins.png");
+	SDL_Surface* owins = IMG_Load("images/owins.png");
 
 	if (xsurface == NULL)
 	{
@@ -47,9 +46,21 @@ int main(int argc, char* argv[])
 		std::cout << "Not loaded properly" << std::endl;
 	}
 
+	if (xwins == NULL)
+	{
+		std::cout << "Not loaded properly" << std::endl;
+	}
+
+	if (owins == NULL)
+	{
+		std::cout << "Not loaded properly" << std::endl;
+	}
+
 	//Loads textures
 	SDL_Texture* xtexture = SDL_CreateTextureFromSurface(renderer, xsurface);
 	SDL_Texture* otexture = SDL_CreateTextureFromSurface(renderer, osurface);
+	SDL_Texture* owinstexture = SDL_CreateTextureFromSurface(renderer, owins);
+	SDL_Texture* xwinstexture = SDL_CreateTextureFromSurface(renderer, xwins);
 
 	//Create board array
 	int boardArr[9] = {};
@@ -63,6 +74,9 @@ int main(int argc, char* argv[])
 
 	//Tracks current player 
 	int player = 1;
+
+	//Notes that play continues
+	bool canPlay = true;
 
 	while (gameRunning)
 	{
@@ -84,10 +98,11 @@ int main(int argc, char* argv[])
 
 		//Update/Game events
 
+		if (canPlay)
 		currentMove = squareposition(Mousex, Mousey, BOARDX, BOARDY, BOARDSIZE, BOARDSPACE);
 		
-		if (currentMove != -1)
-		std::cout << currentMove << std::endl;
+		//if (currentMove != -1)
+		//std::cout << currentMove << std::endl;
 
 		//Puts click into the array
 
@@ -100,13 +115,25 @@ int main(int argc, char* argv[])
 		currentMove = -1;
 
 		if (winCheck(boardArr) != 0)
+		{
 			std::cout << winCheck(boardArr) << " wins!!\n";
+			canPlay = false;
+		}
 
 		//Display stuff
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 		SDL_RenderClear(renderer);
+
+		if (winCheck(boardArr) == 1)
+		{
+			SDL_RenderCopy(renderer, owinstexture, NULL, &winRect);
+		}
+		else if (winCheck(boardArr) == -1)
+		{
+			SDL_RenderCopy(renderer, xwinstexture, NULL, &winRect);
+		}
 
 		drawBoard(renderer, &RECTANGLE, BOARDSIZE, BOARDSPACE, BOARDX, BOARDY);
 
