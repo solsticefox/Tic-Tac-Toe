@@ -4,8 +4,8 @@
 #include <SDL_image.h>
 #include "gamelogic.hpp"
 
-#define BOARDX 480
-#define BOARDY 100
+#define BOARDX 490
+#define boardy 150
 #define BOARDSPACE 210
 #define BOARDSIZE 200
 
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 	SDL_Rect spotRect;
 
 	setRect(&spotRect, NULL, NULL, 200, 200);
-	setRect(&winRect, 50, 400, 300, 200);
+	setRect(&winRect, 625, 80, 350, 150);
 
 	//Load assets
 	SDL_Surface* xsurface = IMG_Load("images/xtic.png");
@@ -78,6 +78,9 @@ int main(int argc, char* argv[])
 	//Notes that play continues
 	bool canPlay = true;
 
+	//Initial board y
+	int BOARDY = boardy;
+
 	while (gameRunning)
 	{
 		while (SDL_PollEvent(&event))
@@ -116,8 +119,8 @@ int main(int argc, char* argv[])
 
 		if (winCheck(boardArr) != 0)
 		{
-			std::cout << winCheck(boardArr) << " wins!!\n";
 			canPlay = false;
+			BOARDY = 250;
 		}
 
 		//Display stuff
