@@ -121,6 +121,9 @@ int main(int argc, char* argv[])
 	//Game state
 	int gameState = 0;
 
+	//Buffer variable
+	int buffer = 0;
+
 	while (gameRunning)
 	{
 		while (SDL_PollEvent(&event))
@@ -139,11 +142,6 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (Mousex != NULL)
-		{
-			std::cout << Mousex << ", " << Mousey << std::endl;
-		}
-
 
 		if (gameState == 0)
 		{
@@ -153,14 +151,20 @@ int main(int argc, char* argv[])
 			if (Mousex > 255 && Mousex < 755 && Mousey > 680 && Mousey < 830)
 			{
 				gameState = 1;
+				buffer = 1;
 			}
 		}
 
-				Mousex == NULL;
-				Mousey == NULL;
 
 		if (gameState == 1)
 		{//Update/Game events
+
+			if (buffer == 1)
+			{
+				Mousex = NULL;
+				Mousey = NULL;
+				buffer = 0;
+			}
 
 			if (canPlay)
 				currentMove = squareposition(Mousex, Mousey, BOARDX, BOARDY, BOARDSIZE, BOARDSPACE);
