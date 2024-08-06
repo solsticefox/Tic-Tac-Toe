@@ -90,7 +90,7 @@ bool boardFiller(int cPosition, int board[], int player)
 		}
 		else
 		{
-			std::cout << "Spot number " << cPosition + 1 << " is taken by player " << player << std::endl;
+			//std::cout << "Spot number " << cPosition + 1 << " is taken by player " << player << std::endl;
 		}
 	}
 
@@ -100,21 +100,38 @@ bool boardFiller(int cPosition, int board[], int player)
 int winCheck(int board[])
 {
 	int winPlayer = 0;
-	
+	int count = 0;
+
 	for (int i = 0; i < 9; i++)
 	{
+		if (board[i] != 0)
+		{
+			count++;
+		}
+	}
+	
+	for (int i = 0; i < 9; i+=3)
+	{
 		if (board[i] == board[i + 1] && board[i + 1] == board[i + 2])
+		{
 			winPlayer = board[i];
+			//if (winPlayer == 1 || winPlayer == -1)
+			//std::cout << "Win con 1\n";
+		}
 		if (winPlayer != 0)
 		{
 			break;
 		}
 	}
 
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (board[i] == board[i + 3] && board[i] == board[i + 6])
+		{
 			winPlayer = board[i];
+			//if (winPlayer == 1 || winPlayer == -1)
+			//std::cout << "Win con 2";
+		}
 		if (winPlayer != 0)
 		{
 			break;
@@ -124,11 +141,18 @@ int winCheck(int board[])
 	if (board[0] == board[4] && board[0] == board[8])
 	{
 		winPlayer = board[0];
+		//if (winPlayer == 1 || winPlayer == -1)
+		//std::cout << "Win con 3";
 	}
 	else if (board[2] == board[4] && board[2] == board[6])
 	{
 		winPlayer = board[2];
+		//if (winPlayer == 1 || winPlayer == -1)
+		//std::cout << "Win con 3";
 	}
+
+	if (winPlayer == 0 && count == 9)
+		winPlayer = 2;
 
 	return winPlayer;
 }
