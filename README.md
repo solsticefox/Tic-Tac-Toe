@@ -1,0 +1,1 @@
+My second project using SDL2 with the focus of creating something more simple and complete.  Was built primarily without tutorial with the exception of learning to use certain SDL2 functions.  This tic tac toe game includes a main menu, win/tie detection, and reset button.  All features were implemented independently.  To run, open in Visual Studio and build and run.
